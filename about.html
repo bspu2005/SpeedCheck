@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Общие мета-теги -->
+        <meta name="author" content="SpeedCheck">
+        <meta name="robots" content="index, follow">
+        <meta name="theme-color" content="#0065d1">
+        
+        <!-- Favicon (общий для всех) -->
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        
+        <!-- Preconnect (общий) -->
+        <link rel="preconnect" href="https://cdn.jsdelivr.net">
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+        
+        <!-- Bootstrap и Font Awesome (общие) -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+              integrity="sha384-... (добавьте SRI)" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+              integrity="sha512-... (добавьте SRI)" crossorigin="anonymous">
+
+        <title>О нас | SpeedCheck — история и преимущества сервиса</title>
+        <meta name="description" content="SpeedCheck — это точный инструмент для проверки скорости интернета. Узнайте о нашей миссии, технологии и команде.">
+        <meta property="og:title" content="О компании SpeedCheck">
+        <meta property="og:description" content="Как мы создаем самый точный тест скорости интернета">
+    <style>
+        :root {
+            --primary-color: #0065d1;
+            --secondary-color: #ffdd57;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text-color);
+            line-height: 1.7;
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+        
+        /* Шапка */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 12px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 8px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .navbar .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar .logo i {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+        
+        .navbar-nav {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            flex-direction: row;
+        }
+        
+        .navbar-nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .navbar-nav a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .navbar-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Основные секции */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .section-title .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+        
+        /* О нас */
+        .about-section {
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            opacity: 0.03;
+            z-index: 0;
+        }
+        
+        .about-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-content p {
+            font-size: 1.15rem;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        /* Особенности */
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 3px solid var(--primary-color);
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-box i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature-box h3 {
+            font-size: 1.4rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .feature-box p {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        /* Почему мы */
+        .why-choose-us {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+        }
+        
+        .benefits-list {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .benefits-list li {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-color);
+        }
+        
+        .benefits-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        /* Отзывы */
+        .user-reviews {
+            background-color: white;
+        }
+        
+        .reviews-container {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .review-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            min-width: 300px;
+            scroll-snap-align: start;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .review-box blockquote {
+            font-style: italic;
+            color: var(--text-color);
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .review-box blockquote::before {
+            content: '\201C';
+            font-size: 3rem;
+            position: absolute;
+            left: -15px;
+            top: -15px;
+            color: rgba(0, 101, 209, 0.1);
+        }
+        
+        .review-box p {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 20px;
+            text-align: right;
+        }
+        
+        /* FAQ */
+        .faq {
+            background: linear-gradient(135deg, #e4e8eb 0%, #f5f7fa 100%);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .features {
+                gap: 20px;
+            }
+            
+            .feature-box {
+                width: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .navbar-nav {
+                gap: 15px;
+            }
+            
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature-box {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .about-content p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar .logo {
+                font-size: 1.3rem;
+            }
+            
+            .navbar-nav a {
+                font-size: 0.95rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="navbar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="#" class="logo">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>SpeedCheck</span>
+            </a>
+            <nav>
+                <ul class="navbar-nav">
+                    <li><a href="index.html">Проверка скорости</a></li>
+                    <li><a href="tariffs.html">Тарифы</a></li>
+                    <li><a href="calculator.html">Калькулятор</a></li>
+                    <li><a href="about.html" class="active">О нас</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- О нас -->
+    <section class="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>О нашем сервисе</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="about-content">
+                <p>
+                    SpeedCheck - это современный инструмент для точного измерения скорости интернет-соединения. 
+                    Наша платформа предоставляет не только мгновенные результаты тестирования, но и подробные 
+                    рекомендации по оптимизации вашего интернет-соединения и выбору оптимального тарифного плана.
+                </p>
+                <p>
+                    Мы работаем с 2018 года, помогая тысячам пользователей улучшить качество своего интернета. 
+                    Наша команда состоит из опытных сетевых инженеров и разработчиков, которые постоянно 
+                    совершенствуют алгоритмы тестирования.
+                </p>
+            </div>
+
+            <div class="features">
+                <div class="feature-box">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Точная проверка</h3>
+                    <p>Мгновенные результаты теста скорости загрузки и отдачи с точностью до 99%</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Анализ данных</h3>
+                    <p>Подробные графики и история измерений для анализа качества связи</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Рекомендации</h3>
+                    <p>Персональные советы по улучшению скорости и выбору тарифного плана</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Почему выбрать нас -->
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="section-title">
+                <h2>Почему выбирают нас?</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <p class="text-center mb-5" style="max-width: 700px; margin: 0 auto;">
+                SpeedCheck предлагает уникальные возможности для контроля и улучшения качества 
+                вашего интернет-соединения
+            </p>
+            
+            <ul class="benefits-list">
+                <li>Технология многопоточного тестирования для максимальной точности измерений</li>
+                <li>Сравнение вашей скорости с средними показателями в вашем регионе</li>
+                <li>Рекомендации по оптимальному времени использования интернета</li>
+                <li>Возможность сохранения истории измерений и отслеживания динамики</li>
+                <li>Советы по настройке роутера и оборудования для лучшей скорости</li>
+                <li>Интеграция с популярными провайдерами для подбора лучшего тарифа</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Отзывы пользователей -->
+    <section class="user-reviews">
+        <div class="container">
+            <div class="section-title">
+                <h2>Отзывы наших пользователей</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="reviews-container">
+                <div class="review-box">
+                    <blockquote>
+                        Прекрасный инструмент для измерения скорости! Благодаря подробным рекомендациям 
+                        я смог увеличить скорость своего интернета на 40%, изменив настройки роутера.
+                    </blockquote>
+                    <p>- Анна Петрова, Москва</p>
+                </div>
+                <div class="review-box">
+                    <blockquote>
+                        Очень удобно и быстро! Теперь я точно знаю, когда мой провайдер недодаёт скорость 
+                        и могу требовать перерасчёт. Особенно нравится история измерений.
+                    </blockquote>
+                    <p>- Иван Смирнов, Санкт-Петербург</p>
+                </div>
+                <div class="review-box">
+                    <blockquote>
+                        Лучший сервис для проверки скорости из тех, что я пробовал. Подбор тарифов 
+                        сэкономил мне 1200 рублей в месяц при том же качестве интернета.
+                    </blockquote>
+                    <p>- Ольга Козлова, Екатеринбург</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Часто задаваемые вопросы -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Часто задаваемые вопросы</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Как работает проверка скорости?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            Наш сервис использует технологию многопоточного тестирования, загружая и выгружая 
+                            данные с нескольких серверов одновременно. Это позволяет получить максимально точные 
+                            результаты, учитывая реальные условия работы в сети. Тест занимает около 30 секунд 
+                            и не требует установки дополнительного ПО.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Могу ли я улучшить скорость интернета?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            Да, в большинстве случаев скорость можно улучшить. После тестирования вы получите 
+                            персональные рекомендации, которые могут включать: настройку роутера, выбор менее 
+                            загруженного канала Wi-Fi, обновление драйверов сетевой карты, проверку на вирусы, 
+                            а также советы по выбору оптимального тарифного плана вашего провайдера.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Как часто нужно проверять скорость?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>
+                            Рекомендуем проводить тестирование:
+                            <ul>
+                                <li>1-2 раза в месяц для контроля качества услуги</li>
+                                <li>При изменении тарифного плана</li>
+                                <li>После смены или настройки сетевого оборудования</li>
+                                <li>При заметном ухудшении скорости</li>
+                            </ul>
+                            Регулярные проверки помогут выявить проблемы и своевременно принять меры.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                
+                <p>Свяжитесь с нами: <a href="mailto:info@speedcheck.ru" style="color: var(--secondary-color);">info@speedcheck.ru</a></p>
+                
+                <p class="copyright">
+                    &copy; 2023 SpeedCheck. Все права защищены.<br>
+                    Использование материалов сайта только с письменного разрешения.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Фиксированная шапка при скролле
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        });
+        
+        // Аккордеон FAQ
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+                
+                // Закрываем другие открытые вопросы
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

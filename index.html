@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка скорости интернета | SpeedCheck - точный тест скорости подключения</title>
+    <meta name="description" content="Бесплатная проверка скорости интернета. Точное измерение скорости загрузки и отдачи, ping и jitter. Рекомендации по улучшению соединения.">
+    <meta name="keywords" content="проверка скорости интернета, тест скорости, скорость интернета, измерить скорость интернета, ping, jitter, загрузка, отдача">
+    <meta name="author" content="SpeedCheck">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Проверка скорости интернета | SpeedCheck">
+    <meta property="og:description" content="Точный тест скорости интернет-соединения с рекомендациями">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://вашсайт.ru">
+    <meta property="og:image" content="https://вашсайт.ru/images/preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://вашсайт.ru">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"></script>
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <style>
+        :root {
+            --primary-color: #0065d1;
+            --secondary-color: #ffdd57;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --text-light: #6c757d;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text-color);
+            line-height: 1.7;
+            background-color: var(--light-color);
+            overflow-x: hidden;
+            padding-top: 60px;
+        }
+        
+        /* Шапка */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 12px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 8px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .navbar .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar .logo i {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+        
+        .navbar-nav {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            flex-direction: row;
+        }
+        
+        .navbar-nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            margin-left: 20px;
+        }
+        
+        .navbar-nav a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .navbar-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Герой-секция */
+        .hero-section {
+            position: relative;
+            height: calc(100vh - 60px);
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 40px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background-color: #ffd700;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Секция проверки скорости */
+        .speedtest-container {
+            padding: 80px 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .section-title .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+        
+        .speedtest-container p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Спидометр */
+        .speed-meter-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 40px;
+        }
+        
+        .speed-meter {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #4CAF50 0deg, 
+                #8BC34A 90deg, 
+                #FFEB3B 180deg, 
+                #FF9800 270deg, 
+                #F44336 360deg
+            );
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .speed-meter::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .speed-value {
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .speed-value span {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+            line-height: 1;
+        }
+        
+        .speed-value .unit {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        
+        .speed-indicator {
+            position: absolute;
+            width: 3px;
+            height: 25px;
+            background-color: var(--dark-color);
+            top: 10px;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(0deg);
+            transition: transform 1s ease-out;
+            z-index: 2;
+        }
+        
+        /* Кнопка проверки */
+        .speed-test-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 101, 209, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .speed-test-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 101, 209, 0.4);
+        }
+        
+        .speed-test-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Результат */
+        .speed-result {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: inline-block;
+            max-width: 600px;
+        }
+        
+        /* График */
+        .chart-container {
+            max-width: 800px;
+            margin: 50px auto 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Анимации */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 56px;
+            }
+            
+            .navbar {
+                padding: 8px 0;
+            }
+            
+            .navbar-nav {
+                gap: 15px;
+            }
+            
+            .hero-content {
+                padding: 20px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .speed-meter-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .speed-value span {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar .logo {
+                font-size: 1.3rem;
+            }
+            
+            .navbar-nav a {
+                font-size: 0.95rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .speed-meter-container {
+                width: 180px;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>SpeedCheck</span>
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="#speedtest" class="active">Проверка скорости</a></li>
+                <li><a href="calculator.html">Калькулятор</a></li>
+                <li><a href="contact.html">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Баннер -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Проверьте скорость вашего интернета</h1>
+            <p>Точное измерение скорости загрузки и отдачи за 30 секунд</p>
+            <a href="#speedtest" class="btn btn-primary pulse">
+                <i class="fas fa-bolt"></i> Начать проверку
+            </a>
+        </div>
+    </section>
+
+    <!-- Проверка скорости -->
+    <section id="speedtest" class="speedtest-container">
+        <div class="container">
+            <div class="section-title">
+                <h2>Проверка скорости интернета</h2>
+                <div class="divider"></div>
+            </div>
+            
+            <p>Нажмите кнопку ниже, чтобы начать тестирование скорости вашего интернет-соединения.</p>
+            
+            <div class="speed-meter-container">
+                <div class="speed-meter"></div>
+                <div class="speed-indicator" id="speedIndicator"></div>
+                <div class="speed-value">
+                    <span id="speedValue">0</span>
+                    <span class="unit">Mbps</span>
+                </div>
+            </div>
+            
+            <button class="speed-test-btn" id="speedTestBtn">
+                <i class="fas fa-play"></i> Начать тест
+            </button>
+            
+            <div class="speed-result" id="speedResult">
+                Нажмите "Начать тест" для измерения скорости
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="speedChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                
+                <p>Свяжитесь с нами: <a href="mailto:info@speedcheck.ru" style="color: var(--secondary-color);">info@speedcheck.ru</a></p>
+                
+                <p class="copyright">
+                    &copy; 2023 SpeedCheck. Все права защищены.<br>
+                    Использование материалов сайта только с письменного разрешения.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Фиксированная шапка при скролле
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        });
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Инициализация графика
+        let ctx = document.getElementById('speedChart').getContext('2d');
+        let speedChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Скорость загрузки (Mbps)',
+                    data: [],
+                    borderColor: '#0065d1',
+                    backgroundColor: 'rgba(0, 101, 209, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Скорость (Mbps)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Время проверки'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Проверка скорости
+        const speedTestBtn = document.getElementById('speedTestBtn');
+        const speedValue = document.getElementById('speedValue');
+        const speedIndicator = document.getElementById('speedIndicator');
+        const speedResult = document.getElementById('speedResult');
+        const speedMeter = document.querySelector('.speed-meter');
+        
+        let testInProgress = false;
+        
+        speedTestBtn.addEventListener('click', function() {
+            if (testInProgress) return;
+            
+            testInProgress = true;
+            speedTestBtn.disabled = true;
+            speedTestBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Измерение...';
+            speedResult.textContent = 'Измеряем скорость вашего интернет-соединения...';
+            
+            // Анимация спидометра
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 2;
+                const angle = Math.min(progress * 3.6, 360);
+                speedIndicator.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                }
+            }, 30);
+            
+            // Имитация проверки скорости
+            setTimeout(() => {
+                // Генерация случайной скорости (в реальном приложении здесь будет реальный тест)
+                const downloadSpeed = Math.floor(Math.random() * 80 + 20);
+                const uploadSpeed = Math.floor(downloadSpeed * 0.6);
+                const ping = Math.floor(Math.random() * 30 + 5);
+                
+                // Обновление значений
+                speedValue.textContent = downloadSpeed;
+                
+                // Установка положения стрелки на спидометре
+                const angle = Math.min(downloadSpeed * 3.6, 360);
+                speedIndicator.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+                
+                // Обновление результата
+                speedResult.innerHTML = `
+                    <strong>Результаты теста:</strong><br>
+                    Скорость загрузки: <strong>${downloadSpeed} Mbps</strong><br>
+                    Скорость отдачи: <strong>${uploadSpeed} Mbps</strong><br>
+                    Пинг: <strong>${ping} ms</strong>
+                `;
+                
+                // Добавление данных в график
+                const now = new Date();
+                const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                if (speedChart.data.labels.length >= 5) {
+                    speedChart.data.labels.shift();
+                    speedChart.data.datasets[0].data.shift();
+                }
+                
+                speedChart.data.labels.push(timeString);
+                speedChart.data.datasets[0].data.push(downloadSpeed);
+                speedChart.update();
+                
+                // Сброс состояния кнопки
+                testInProgress = false;
+                speedTestBtn.disabled = false;
+                speedTestBtn.innerHTML = '<i class="fas fa-redo"></i> Проверить снова';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
