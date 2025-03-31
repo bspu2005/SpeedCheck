@@ -42,426 +42,705 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <style>
-        :root {
-            --primary-color: #0065d1;
-            --secondary-color: #ffdd57;
-            --dark-color: #2c3e50;
-            --light-color: #f8f9fa;
-            --text-color: #333;
-            --text-light: #6c757d;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: var(--text-color);
-            line-height: 1.7;
-            background-color: var(--light-color);
-            overflow-x: hidden;
-            padding-top: 60px;
-        }
-        
-        /* Шапка */
-        .navbar {
-            background-color: var(--primary-color);
-            padding: 12px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .navbar.scrolled {
-            padding: 8px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-        }
-        
-        .navbar-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .navbar .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .navbar .logo i {
-            font-size: 1.8rem;
-            color: var(--secondary-color);
-        }
-        
-        .navbar-nav {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            align-items: center;
-            flex-direction: row;
-        }
-        
-        .navbar-nav a {
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-size: 1.05rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 5px 0;
-            margin-left: 20px;
-        }
-        
-        .navbar-nav a:hover {
-            color: var(--secondary-color);
-        }
-        
-        .navbar-nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--secondary-color);
-            transition: width 0.3s ease;
-        }
-        
-        .navbar-nav a:hover::after {
-            width: 100%;
-        }
-        
-        /* Герой-секция */
-        .hero-section {
-            position: relative;
-            height: calc(100vh - 60px);
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            padding: 40px;
-        }
-        
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn-primary {
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-primary:hover {
-            background-color: #ffd700;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Секция проверки скорости */
-        .speedtest-container {
-            padding: 80px 0;
-            background-color: white;
-            text-align: center;
-        }
-        
-        .section-title {
-            position: relative;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        
-        .section-title .divider {
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            margin: 0 auto;
-            border-radius: 2px;
-        }
-        
-        .speedtest-container p {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-        
-        /* Спидометр */
-        .speed-meter-container {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 0 auto 40px;
-        }
-        
-        .speed-meter {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(
-                #4CAF50 0deg, 
-                #8BC34A 90deg, 
-                #FFEB3B 180deg, 
-                #FF9800 270deg, 
-                #F44336 360deg
-            );
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .speed-meter::before {
-            content: '';
-            position: absolute;
-            width: 80%;
-            height: 80%;
-            background-color: white;
-            border-radius: 50%;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .speed-value {
-            position: absolute;
-            z-index: 1;
-            text-align: center;
-        }
-        
-        .speed-value span {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            display: block;
-            line-height: 1;
-        }
-        
-        .speed-value .unit {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-top: 5px;
-        }
-        
-        .speed-indicator {
-            position: absolute;
-            width: 3px;
-            height: 25px;
-            background-color: var(--dark-color);
-            top: 10px;
-            left: 50%;
-            transform-origin: bottom center;
-            transform: translateX(-50%) rotate(0deg);
-            transition: transform 1s ease-out;
-            z-index: 2;
-        }
-        
-        /* Кнопка проверки */
-        .speed-test-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 101, 209, 0.3);
-            margin-bottom: 30px;
-        }
-        
-        .speed-test-btn:hover {
-            background-color: #0056b3;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 101, 209, 0.4);
-        }
-        
-        .speed-test-btn:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        /* Результат */
-        .speed-result {
-            font-size: 1.3rem;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            display: inline-block;
-            max-width: 600px;
-        }
-        
-        /* График */
-        .chart-container {
-            max-width: 800px;
-            margin: 50px auto 0;
-            padding: 20px;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Подвал */
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 50px 0 20px;
-            text-align: center;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 1.3rem;
-            transition: color 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            color: var(--secondary-color);
-        }
-        
-        .copyright {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-        
-        /* Анимации */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 992px) {
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.2rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding-top: 56px;
-            }
-            
-            .navbar {
-                padding: 8px 0;
-            }
-            
-            .navbar-nav {
-                gap: 15px;
-            }
-            
-            .hero-content {
-                padding: 20px;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero-content p {
-                font-size: 1.1rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.8rem;
-            }
-            
-            .speed-meter-container {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .speed-value span {
-                font-size: 2.5rem;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .navbar .logo {
-                font-size: 1.3rem;
-            }
-            
-            .navbar-nav a {
-                font-size: 0.95rem;
-            }
-            
-            .hero-content h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.6rem;
-            }
-            
-            .speed-meter-container {
-                width: 180px;
-                height: 180px;
-            }
-        }
+:root {
+    --primary-color: #0065d1;
+    --primary-dark: #004a99;
+    --secondary-color: #ffdd57;
+    --secondary-dark: #e6c84d;
+    --dark-color: #2c3e50;
+    --darker-color: #1a2634;
+    --light-color: #f8f9fa;
+    --lighter-color: #ffffff;
+    --text-color: #333;
+    --text-light: #6c757d;
+    --vk-color: #4a76a8;
+    --rutube-color: #ff0000;
+    --ok-color: #ee8208;
+    --tg-color: #2aabee;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    color: var(--text-color);
+    line-height: 1.7;
+    background-color: var(--light-color);
+    overflow-x: hidden;
+}
+
+/* Шапка с градиентом */
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    padding: 15px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    background: var(--primary-color);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s ease;
+}
+
+.navbar .logo:hover {
+    transform: scale(1.05);
+}
+
+.navbar .logo i {
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    flex-direction: row;
+    margin-left: 50px;
+}
+
+.navbar-nav a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 0;
+}
+
+.navbar-nav a:hover {
+    color: var(--secondary-color);
+}
+
+.navbar-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+.navbar-nav a:hover::after {
+    width: 100%;
+}
+
+/* Герой-секция с параллакс эффектом */
+.hero-section {
+    position: relative;
+    height: calc(100vh - 70px);
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 40px;
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+    border: none;
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.speedtest-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+.speed-meter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.speed-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.speed-test-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.speed-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Секция проверки скорости с неоновым эффектом */
+.speedtest-container {
+    padding: 100px 0;
+    background-color: var(--lighter-color);
+    text-align: center;
+    position: relative;
+}
+
+.speedtest-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+.section-title {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: var(--secondary-color);
+    border-radius: 3px;
+}
+
+.speedtest-container p {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+}
+
+/* Улучшенный спидометр */
+.speed-meter-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto 40px;
+}
+
+.speed-meter {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        #4CAF50 0%, 
+        #8BC34A 30%, 
+        #FFEB3B 60%, 
+        #FF9800 80%, 
+        #F44336 100%
+    );
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+}
+
+.speed-meter:hover {
+    transform: rotate(5deg);
+}
+
+.speed-meter::before {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.speed-value {
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+}
+
+.speed-value span {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    display: block;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.speed-value .unit {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.speed-indicator {
+    position: absolute;
+    width: 4px;
+    height: 30px;
+    background-color: var(--dark-color);
+    top: 10px;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(0deg);
+    transition: transform 1s cubic-bezier(0.17, 0.67, 0.21, 0.99);
+    z-index: 2;
+    border-radius: 2px;
+}
+
+/* Кнопка проверки с эффектом нажатия */
+.speed-test-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 16px 45px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 101, 209, 0.3);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.speed-test-btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 101, 209, 0.4);
+}
+
+.speed-test-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(0, 101, 209, 0.4);
+}
+
+.speed-test-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Анимированный результат */
+.speed-result {
+    font-size: 1.3rem;
+    margin-top: 20px;
+    padding: 15px 25px;
+    border-radius: 50px;
+    background-color: var(--light-color);
+    display: inline-block;
+    max-width: 600px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.speed-result:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* График с анимацией */
+.chart-container {
+    max-width: 800px;
+    margin: 50px auto 0;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Подвал с градиентом */
+/* Стили для футера */
+footer {
+    background: linear-gradient(135deg, var(--dark-color), var(--darker-color));
+    color: white;
+    padding: 60px 0 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.social-link:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Цвета для соцсетей */
+.social-link.vk {
+    background-color: var(--vk-color);
+}
+
+.social-link.telegram {
+    background-color: var(--tg-color);
+}
+
+.social-link.rutube {
+    background-color: var(--rutube-color);
+}
+
+.social-link.ok {
+    background-color: var(--ok-color);
+}
+
+.contact-info {
+    margin-bottom: 25px;
+}
+
+.contact-info p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.email-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.email-link:hover {
+    color: var(--secondary-dark);
+    text-decoration: underline;
+}
+
+.phone {
+    color: rgba(255, 255, 255, 0.9);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23f8f9fa" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%23f8f9fa" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23f8f9fa"/></svg>');
+    background-size: cover;
+    z-index: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .social-links {
+        gap: 15px;
+    }
+    
+    .social-link {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .contact-info p {
+        font-size: 1rem;
+    }
+    
+    .copyright {
+        font-size: 0.85rem;
+    }
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Эффект волны */
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23f8f9fa" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%23f8f9fa" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23f8f9fa"/></svg>');
+    background-size: cover;
+    z-index: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+    
+    .section-title h2 {
+        font-size: 2.2rem;
+    }
+    
+    .speed-meter-container {
+        width: 240px;
+        height: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px;
+    }
+    
+    .navbar {
+        padding: 10px 0;
+    }
+    
+    .navbar-nav {
+        gap: 15px;
+    }
+    
+    .hero-content {
+        padding: 20px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .speed-meter-container {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .speed-value span {
+        font-size: 2.5rem;
+    }
+    
+    .social-links {
+        gap: 15px;
+    }
+    
+    .social-link {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar .logo {
+        font-size: 1.4rem;
+    }
+    
+    .navbar .logo i {
+        font-size: 1.6rem;
+    }
+    
+    .navbar-nav a {
+        font-size: 0.95rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title h2 {
+        font-size: 1.6rem;
+    }
+    
+    .speed-meter-container {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .btn-primary, .speed-test-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    
+    .footer-content {
+        gap: 15px;
+    }
+}
     </style>
 </head>
 <body>
@@ -530,13 +809,30 @@
         <div class="container">
             <div class="footer-content">
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-vk"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link vk" aria-label="ВКонтакте">
+                        <i class="fab fa-vk"></i>
+                    </a>
+                    <a href="#" class="social-link telegram" aria-label="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="social-link rutube" aria-label="RuTube">
+                        <i class="fas fa-play"></i> <!-- Иконка для RuTube -->
+                    </a>
+                    <a href="#" class="social-link ok" aria-label="Одноклассники">
+                        <i class="fab fa-odnoklassniki"></i>
+                    </a>
                 </div>
                 
-                <p>Свяжитесь с нами: <a href="mailto:info@speedcheck.ru" style="color: var(--secondary-color);">info@speedcheck.ru</a></p>
+                <div class="contact-info">
+                    <p>Свяжитесь с нами: 
+                        <a href="mailto:info@speedcheck.ru" class="email-link">
+                            <i class="fas fa-envelope"></i> info@speedcheck.ru
+                        </a>
+                    </p>
+                    <p class="phone">
+                        <i class="fas fa-phone-alt"></i> +7 (XXX) XXX-XX-XX
+                    </p>
+                </div>
                 
                 <p class="copyright">
                     &copy; 2023 SpeedCheck. Все права защищены.<br>
@@ -544,8 +840,8 @@
                 </p>
             </div>
         </div>
+        <div class="wave"></div>
     </footer>
-
     <script>
         // Фиксированная шапка при скролле
         window.addEventListener('scroll', function() {
@@ -558,129 +854,166 @@
         
         // Плавная прокрутка
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
         
         // Инициализация графика
-        let ctx = document.getElementById('speedChart').getContext('2d');
-        let speedChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Скорость загрузки (Mbps)',
-                    data: [],
-                    borderColor: '#0065d1',
-                    backgroundColor: 'rgba(0, 101, 209, 0.1)',
-                    borderWidth: 3,
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                    }
+        let speedChart = null;
+        function initChart() {
+            const ctx = document.getElementById('speedChart').getContext('2d');
+            speedChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Скорость загрузки (Mbps)',
+                        data: [],
+                        borderColor: '#0065d1',
+                        backgroundColor: 'rgba(0, 101, 209, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Скорость (Mbps)'
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
                         }
                     },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Время проверки'
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Скорость (Mbps)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Время проверки'
+                            }
                         }
                     }
                 }
+            });
+        }
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            initChart();
+            
+            const speedTestBtn = document.getElementById('speedTestBtn');
+            const speedValue = document.getElementById('speedValue');
+            const speedIndicator = document.getElementById('speedIndicator');
+            const speedResult = document.getElementById('speedResult');
+            
+            let testInProgress = false;
+            let testStartTime;
+            const downloadSize = 5 * 1024 * 1024; // 5MB тестовый файл
+            const testFileUrl = 'https://httpbin.org/bytes/5242880'; // Тестовый файл 5MB
+            
+            speedTestBtn.addEventListener('click', async function() {
+                if (testInProgress) return;
+                
+                testInProgress = true;
+                speedTestBtn.disabled = true;
+                speedTestBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Измерение...';
+                speedResult.textContent = 'Измеряем скорость вашего интернет-соединения...';
+                speedValue.textContent = '0';
+                
+                try {
+                    // Анимация спидометра
+                    let progress = 0;
+                    const interval = setInterval(() => {
+                        progress += 2;
+                        const angle = Math.min(progress * 3.6, 360);
+                        speedIndicator.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+                        
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                        }
+                    }, 30);
+                    
+                    // Реальная проверка скорости
+                    testStartTime = Date.now();
+                    const downloadSpeed = await measureDownloadSpeed();
+                    
+                    // Установка положения стрелки на спидометре
+                    const angle = Math.min(downloadSpeed * 3.6, 360);
+                    speedIndicator.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+                    
+                    // Обновление результата
+                    speedResult.innerHTML = `
+                        <strong>Результаты теста:</strong><br>
+                        Скорость загрузки: <strong>${downloadSpeed.toFixed(2)} Mbps</strong>
+                    `;
+                    
+                    // Добавление данных в график
+                    const now = new Date();
+                    const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    if (speedChart.data.labels.length >= 5) {
+                        speedChart.data.labels.shift();
+                        speedChart.data.datasets[0].data.shift();
+                    }
+                    
+                    speedChart.data.labels.push(timeString);
+                    speedChart.data.datasets[0].data.push(downloadSpeed);
+                    speedChart.update();
+                    
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    speedResult.textContent = 'Ошибка при проверке скорости: ' + error.message;
+                } finally {
+                    testInProgress = false;
+                    speedTestBtn.disabled = false;
+                    speedTestBtn.innerHTML = '<i class="fas fa-redo"></i> Проверить снова';
+                }
+            });
+            
+            async function measureDownloadSpeed() {
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', testFileUrl + '?nocache=' + Math.random(), true);
+                    
+                    xhr.onprogress = (event) => {
+                        if (event.lengthComputable) {
+                            const elapsedTime = (Date.now() - testStartTime) / 1000;
+                            const speed = (event.loaded * 8) / (elapsedTime * 1024 * 1024);
+                            speedValue.textContent = speed.toFixed(2);
+                        }
+                    };
+                    
+                    xhr.onload = () => {
+                        const endTime = Date.now();
+                        const duration = (endTime - testStartTime) / 1000;
+                        const bitsLoaded = downloadSize * 8;
+                        const speedMbps = (bitsLoaded / duration) / (1024 * 1024);
+                        resolve(speedMbps);
+                    };
+                    
+                    xhr.onerror = () => reject(new Error('Ошибка загрузки тестового файла'));
+                    xhr.send();
+                });
             }
         });
-        
-        // Проверка скорости
-        const speedTestBtn = document.getElementById('speedTestBtn');
-        const speedValue = document.getElementById('speedValue');
-        const speedIndicator = document.getElementById('speedIndicator');
-        const speedResult = document.getElementById('speedResult');
-        const speedMeter = document.querySelector('.speed-meter');
-        
-        let testInProgress = false;
-        
-        speedTestBtn.addEventListener('click', function() {
-            if (testInProgress) return;
-            
-            testInProgress = true;
-            speedTestBtn.disabled = true;
-            speedTestBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Измерение...';
-            speedResult.textContent = 'Измеряем скорость вашего интернет-соединения...';
-            
-            // Анимация спидометра
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 2;
-                const angle = Math.min(progress * 3.6, 360);
-                speedIndicator.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                }
-            }, 30);
-            
-            // Имитация проверки скорости
-            setTimeout(() => {
-                // Генерация случайной скорости (в реальном приложении здесь будет реальный тест)
-                const downloadSpeed = Math.floor(Math.random() * 80 + 20);
-                const uploadSpeed = Math.floor(downloadSpeed * 0.6);
-                const ping = Math.floor(Math.random() * 30 + 5);
-                
-                // Обновление значений
-                speedValue.textContent = downloadSpeed;
-                
-                // Установка положения стрелки на спидометре
-                const angle = Math.min(downloadSpeed * 3.6, 360);
-                speedIndicator.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-                
-                // Обновление результата
-                speedResult.innerHTML = `
-                    <strong>Результаты теста:</strong><br>
-                    Скорость загрузки: <strong>${downloadSpeed} Mbps</strong><br>
-                    Скорость отдачи: <strong>${uploadSpeed} Mbps</strong><br>
-                    Пинг: <strong>${ping} ms</strong>
-                `;
-                
-                // Добавление данных в график
-                const now = new Date();
-                const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
-                
-                if (speedChart.data.labels.length >= 5) {
-                    speedChart.data.labels.shift();
-                    speedChart.data.datasets[0].data.shift();
-                }
-                
-                speedChart.data.labels.push(timeString);
-                speedChart.data.datasets[0].data.push(downloadSpeed);
-                speedChart.update();
-                
-                // Сброс состояния кнопки
-                testInProgress = false;
-                speedTestBtn.disabled = false;
-                speedTestBtn.innerHTML = '<i class="fas fa-redo"></i> Проверить снова';
-            }, 3000);
-        });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
 </html>
